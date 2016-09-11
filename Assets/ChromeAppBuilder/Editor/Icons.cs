@@ -49,7 +49,7 @@ namespace ChromeAppBuilder {
 		public static void CreateIconFromDefault (string iconsFolder, int size)
 		{
 			Texture2D[] icons = PlayerSettings.GetIconsForTargetGroup (0);
-			if (icons.Length == 0) {
+			if (icons==null || icons.Length == 0 || icons [0]==null) {
 				return;
 			}
 			int MinDiff = icons [0].width - size;

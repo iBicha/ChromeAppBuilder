@@ -399,8 +399,8 @@ namespace ChromeAppBuilder
 				ShowNotification (new GUIContent (".pem file not found. Select file or disable the pack extension option."));
 				return false;
 			}
-			if (BuildSettings.Get.shortName == "") {
-				BuildSettings.Get.shortName = PlayerSettings.productName.Length > 0 ? PlayerSettings.productName.Substring (0, 12) : "short name";
+			if (BuildSettings.Get.shortName == "" && PlayerSettings.productName.Length > 0) {
+				BuildSettings.Get.shortName = PlayerSettings.productName.Substring (0, Mathf.Min(PlayerSettings.productName.Length,12));
 			}
 			if (ChromeHelper.GetChromeLocation () == "") {
 				if (EditorUtility.DisplayDialog ("Chrome not found", "We can't seem to find Google Chrome on your system. would you like to manually search for it?", "Browse...", "Cancel")) {
