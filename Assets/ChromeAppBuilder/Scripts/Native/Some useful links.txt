@@ -1,0 +1,7 @@
+﻿/* http://docs.unity3d.com/Manual/webgl-interactingwithbrowserscripting.html
+ * http://forum.unity3d.com/threads/c-jslib-2-way-communication.323629/
+ * http://forum.unity3d.com/threads/super-fast-javascript-interaction-on-webgl.382734/
+ * https://github.com/atteneder/UnityJavascriptInteraction
+ *
+ * https://developer.chrome.com/apps/api_index
+ */
