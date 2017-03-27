@@ -143,6 +143,10 @@ namespace ChromeAppBuilder
                     EditorGUILayout.HelpBox("Note that WebGL development builds are much larger than release builds and should not be published.", MessageType.None);
 
                     EditorUserBuildSettings.webGLUsePreBuiltUnityEngine = EditorGUILayout.ToggleLeft("Use pre-built Engine", EditorUserBuildSettings.webGLUsePreBuiltUnityEngine);
+					if (EditorUserBuildSettings.webGLUsePreBuiltUnityEngine) {
+						EditorGUILayout.HelpBox("Note that while this option significantly speeds up the build, it always produces unstripped engine code. The 'Strip Engine Code' optimization option will therefore have no effect in this case.", MessageType.None);
+
+					}
                 }
                 EditorUserBuildSettings.connectProfiler = EditorGUILayout.ToggleLeft ("Autoconnect Profiler*", EditorUserBuildSettings.connectProfiler);
 				GUI.enabled = true;
