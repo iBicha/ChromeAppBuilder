@@ -281,7 +281,7 @@ namespace ChromeAppBuilder
                     PlayerSettings.WebGL.exceptionSupport = WebGLExceptionSupport;
                 }
                 GUI.changed = false;
-                WebGLCompressionFormat = (WebGLCompressionFormat)EditorGUILayout.EnumPopup("Compression Format", PlayerSettings.WebGL.compressionFormat);
+                WebGLCompressionFormat = (WebGLCompressionFormat)EditorGUILayout.EnumPopup("Compression Format*", PlayerSettings.WebGL.compressionFormat);
                 if (GUI.changed)
                 {
                     PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat;
