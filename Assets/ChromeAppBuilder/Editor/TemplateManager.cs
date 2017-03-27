@@ -12,8 +12,8 @@ namespace ChromeAppBuilder
 
 		public static string SetChromeTemplate (string newTemplate)
 		{
-			string lastUsedTemplate = PlayerSettings.GetPropertyString ("template", BuildTargetGroup.WebGL);
-			PlayerSettings.SetPropertyString ("template", newTemplate, BuildTargetGroup.WebGL);
+            string lastUsedTemplate = PlayerSettings.WebGL.template;
+            PlayerSettings.WebGL.template = newTemplate;
 			return lastUsedTemplate;
 		}
 
@@ -36,7 +36,7 @@ namespace ChromeAppBuilder
 			filecontent = filecontent.Replace ("%UNITY_DEVELOPMENT_PLAYER%", EditorUserBuildSettings.development ? "1" : "0");
 			filecontent = filecontent.Replace ("%UNITY_WEBGL_DATA_FOLDER%", EditorUserBuildSettings.development ? "Development" : "Release");
 			filecontent = filecontent.Replace ("%UNITY_WEBGL_FILE_NAME%", Path.GetFileName (path));
-			filecontent = filecontent.Replace ("%UNITY_WEBGL_TOTAL_MEMORY%", ((uint)((PlayerSettings.GetPropertyInt ("memorySize", BuildTargetGroup.WebGL) * 0x400) * 0x400)).ToString ());
+			filecontent = filecontent.Replace ("%UNITY_WEBGL_TOTAL_MEMORY%", ((uint)((PlayerSettings.WebGL.memorySize * 0x400) * 0x400)).ToString ());
 
 			/*
 			 * Custom values requires System.Reflection, and will fail silently in case methods didn't load 

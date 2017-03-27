@@ -10,20 +10,18 @@ namespace ChromeAppBuilder
 	
 	public class BuilderWindow : EditorWindow
 	{
-		private static GUIStyle categoryBox;
+		private static GUIStyle categoryBox; 
 		private static int selectedSection = -1;
 		private static Vector2 scrollPos;
 		private static AnimBool[] SectionAnimators = new AnimBool[7];
 		private static EditorBuildSettingsScene[] scenes;
-		private static string[] optimizationStrings = { "Slow (fast builds)", "Fast", "Fastest (very slow builds)" };
-		private static int[] optimizationInts = { 1, 2, 3 };
 		private static bool buildClicked = false;
 		private static bool buildAndRunClicked = false;
-		  
-		private static bool WebGLDataCaching;
-		private static int WebGLExceptionSupport;
-		private static int WebGLMemorySize;
-		private static string[] WebGLExceptionSupportStrings = { "None" , "Explicitly Thrown Exceptions Only", "Full" };
+        private static bool WebGLDebugSymbols;
+        private static bool WebGLDataCaching;
+        private static WebGLExceptionSupport WebGLExceptionSupport;
+        private static WebGLCompressionFormat WebGLCompressionFormat;
+        private static int WebGLMemorySize;
 
 		[MenuItem ("Window/Chrome App Builder")]
 		static void Init ()
@@ -232,7 +230,7 @@ namespace ChromeAppBuilder
 		void SplashSectionGUI(){
 			if (BeginSettingsBox (4, new GUIContent ("Splash Image"))) {
 				EditorGUI.BeginDisabledGroup(!UnityEditorInternal.InternalEditorUtility.HasAdvancedLicenseOnBuildTarget(BuildTarget.WebGL));
-				PlayerSettings.showUnitySplashScreen = EditorGUILayout.Toggle ("Show Unity Splash Screen*",PlayerSettings.showUnitySplashScreen, new GUILayoutOption[0]);
+				PlayerSettings.SplashScreen.show = EditorGUILayout.Toggle ("Show Unity Splash Screen*", PlayerSettings.SplashScreen.show, new GUILayoutOption[0]);
 				EditorGUI.EndDisabledGroup();
 				ShowSharedNote ();
 			}
@@ -270,24 +268,38 @@ namespace ChromeAppBuilder
 				WebGLMemorySize = EditorGUILayout.IntField ("WebGL Memory Size*", WebGLMemorySize);
 				if (GUI.changed) {
 					WebGLMemorySize = Mathf.Clamp(WebGLMemorySize, 0x10, 0x7ff);
-					PlayerSettings.SetPropertyInt ("memorySize", WebGLMemorySize, BuildTargetGroup.WebGL);
-				}
-				GUI.changed = false;
-				WebGLExceptionSupport = EditorGUILayout.Popup ("Enable Exceptions*",WebGLExceptionSupport, WebGLExceptionSupportStrings);
-				if (WebGLExceptionSupport == 2)
-				{
-					EditorGUILayout.HelpBox("Full exception support adds a lot of code to do sanity checks, which costs a lot of performance and browser memory. Only use this for debugging, and make sure to test in a 64-bit browser.", MessageType.Warning);
-				}
-				if (GUI.changed) {
-					PlayerSettings.SetPropertyInt ("exceptionSupport", WebGLExceptionSupport, BuildTargetGroup.WebGL);
-				}
-				GUI.changed = false;
-				WebGLDataCaching = EditorGUILayout.Toggle ("Data caching*", WebGLDataCaching);
-				if (GUI.changed) {
-					PlayerSettings.SetPropertyBool ("dataCaching", WebGLDataCaching, BuildTargetGroup.WebGL);
-				}
+                    PlayerSettings.WebGL.memorySize = WebGLMemorySize;
+                }
+                GUI.changed = false;
+                WebGLExceptionSupport = (WebGLExceptionSupport)EditorGUILayout.EnumPopup("Enable Exceptions*", PlayerSettings.WebGL.exceptionSupport);
+                if (WebGLExceptionSupport == WebGLExceptionSupport.Full)
+                {
+                    EditorGUILayout.HelpBox("Full exception support adds a lot of code to do sanity checks, which costs a lot of performance and browser memory. Only use this for debugging, and make sure to test in a 64-bit browser.", MessageType.Warning);
+                }
+                if (GUI.changed)
+                {
+                    PlayerSettings.WebGL.exceptionSupport = WebGLExceptionSupport;
+                }
+                GUI.changed = false;
+                WebGLCompressionFormat = (WebGLCompressionFormat)EditorGUILayout.EnumPopup("Compression Format", PlayerSettings.WebGL.compressionFormat);
+                if (GUI.changed)
+                {
+                    PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat;
+                }
+                GUI.changed = false;
+                WebGLDataCaching = EditorGUILayout.Toggle("Data caching*", WebGLDataCaching);
+                if (GUI.changed)
+                {
+                    PlayerSettings.WebGL.dataCaching = WebGLDataCaching;
+                }
+                GUI.changed = false;
+                WebGLDebugSymbols = EditorGUILayout.Toggle("Debug Symbols*", WebGLDebugSymbols);
+                if (GUI.changed)
+                {
+                    PlayerSettings.WebGL.debugSymbols = WebGLDebugSymbols;
+                }
 
-				EditorGUILayout.Space ();
+                EditorGUILayout.Space ();
 				GUILayout.Label("Permissions", EditorStyles.boldLabel, new GUILayoutOption[0]);
 				scrollPos= EditorGUILayout.BeginScrollView (scrollPos, EditorStyles.helpBox, GUILayout.MinHeight(110f) );
 				for (int i = 0; i < BuildSettings.Get.permissions.Length; i++) {
@@ -378,10 +390,12 @@ namespace ChromeAppBuilder
 		private void OnEnable ()
 		{
 			BuildSettings.Load ();
-			WebGLMemorySize = PlayerSettings.GetPropertyInt ("memorySize", BuildTargetGroup.WebGL);
-			WebGLExceptionSupport = PlayerSettings.GetPropertyInt ("exceptionSupport", BuildTargetGroup.WebGL);
-			WebGLDataCaching = PlayerSettings.GetPropertyBool ("dataCaching", BuildTargetGroup.WebGL);
-			for (int j = 0; j < SectionAnimators.Length; j++) {
+            WebGLMemorySize = PlayerSettings.WebGL.memorySize;
+            WebGLExceptionSupport = PlayerSettings.WebGL.exceptionSupport;
+            WebGLCompressionFormat = PlayerSettings.WebGL.compressionFormat;
+            WebGLDataCaching = PlayerSettings.WebGL.dataCaching;
+            WebGLDebugSymbols = PlayerSettings.WebGL.debugSymbols;
+            for (int j = 0; j < SectionAnimators.Length; j++) {
 				SectionAnimators [j] = new AnimBool (selectedSection == j, new UnityAction (base.Repaint));
 			}
 		}
@@ -392,13 +406,14 @@ namespace ChromeAppBuilder
 		}
 		private void OnFocus ()
 		{
-			WebGLMemorySize = PlayerSettings.GetPropertyInt ("memorySize", BuildTargetGroup.WebGL);
-			WebGLExceptionSupport = PlayerSettings.GetPropertyInt ("exceptionSupport", BuildTargetGroup.WebGL);
-			WebGLDataCaching = PlayerSettings.GetPropertyBool ("dataCaching", BuildTargetGroup.WebGL);
+            WebGLMemorySize = PlayerSettings.WebGL.memorySize;
+            WebGLExceptionSupport = PlayerSettings.WebGL.exceptionSupport;
+            WebGLCompressionFormat = PlayerSettings.WebGL.compressionFormat;
+            WebGLDataCaching = PlayerSettings.WebGL.dataCaching;
+            WebGLDebugSymbols = PlayerSettings.WebGL.debugSymbols;
+        }
 
-		}
-
-		public bool RoutineChecks(){
+        public bool RoutineChecks(){
 			if (BuildSettings.Get.packExtension && BuildSettings.Get.updateExtension && !File.Exists (BuildSettings.Get.pemFile)) {
 				ShowNotification (new GUIContent (".pem file not found. Select file or disable the pack extension option."));
 				return false;
