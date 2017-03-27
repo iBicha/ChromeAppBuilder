@@ -140,9 +140,13 @@ namespace ChromeAppBuilder
 			if (BeginSettingsBox (1, new GUIContent ("Build Settings"))) {
 				EditorUserBuildSettings.development = EditorGUILayout.ToggleLeft ("Development Build*", EditorUserBuildSettings.development);
 				GUI.enabled = EditorUserBuildSettings.development;
-   				EditorUserBuildSettings.webGLOptimizationLevel = EditorGUILayout.IntPopup ("Optimization Level*", EditorUserBuildSettings.webGLOptimizationLevel, optimizationStrings, optimizationInts);
-				EditorUserBuildSettings.connectProfiler = EditorGUILayout.ToggleLeft ("Autoconnect Profiler*", EditorUserBuildSettings.connectProfiler);
+                if(EditorUserBuildSettings.development)
+                {
+                    EditorGUILayout.HelpBox("Note that WebGL development builds are much larger than release builds and should not be published.", MessageType.None);
 
+                    EditorUserBuildSettings.webGLUsePreBuiltUnityEngine = EditorGUILayout.ToggleLeft("Use pre-built Engine", EditorUserBuildSettings.webGLUsePreBuiltUnityEngine);
+                }
+                EditorUserBuildSettings.connectProfiler = EditorGUILayout.ToggleLeft ("Autoconnect Profiler*", EditorUserBuildSettings.connectProfiler);
 				GUI.enabled = true;
 				ShowSharedNote ();
 			}
