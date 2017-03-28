@@ -28,9 +28,13 @@ namespace ChromeAppBuilder
 
 		public static void ProcessTemplateFile (string path,string file)
 		{
-			string fullpath = Path.Combine (path, file);
-			string filecontent = File.ReadAllText (fullpath);
-			filecontent = filecontent.Replace ("%UNITY_WIDTH%", PlayerSettings.defaultWebScreenWidth.ToString ());
+            string fullpath = Path.Combine(path, file);
+            if (File.Exists(fullpath))
+            {
+                return;
+            }
+            string filecontent = File.ReadAllText(fullpath);
+            filecontent = filecontent.Replace ("%UNITY_WIDTH%", PlayerSettings.defaultWebScreenWidth.ToString ());
 			filecontent = filecontent.Replace ("%UNITY_HEIGHT%", PlayerSettings.defaultWebScreenHeight.ToString ());
 			filecontent = filecontent.Replace ("%UNITY_WEB_NAME%", PlayerSettings.productName);
 			filecontent = filecontent.Replace ("%UNITY_DEVELOPMENT_PLAYER%", EditorUserBuildSettings.development ? "1" : "0");
