@@ -29,7 +29,7 @@ namespace ChromeAppBuilder
 		public static void ProcessTemplateFile (string path,string file)
 		{
             string fullpath = Path.Combine(path, file);
-            if (File.Exists(fullpath))
+            if (!File.Exists(fullpath))
             {
                 return;
             }
