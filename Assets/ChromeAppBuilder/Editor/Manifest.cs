@@ -71,8 +71,9 @@ namespace ChromeAppBuilder
                 }
 			}
 			for (int i = 0; i < (int)Permissions.Count; i++) {
-				if (BuildSettings.Get.permissions [i]) {
-					Permissions perm = (Permissions)i;
+                if (BuildSettings.Get.permissions[i % BuildSettings.Get.permissions.Length])
+                {
+                    Permissions perm = (Permissions)i;
 					if (!manifest.permissions.Contains (perm.ToPermission ())) {
 						manifest.permissions.Add (perm.ToPermission ());
 					}
