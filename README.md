@@ -13,6 +13,7 @@ No, but it should be. I guess i should do that, soon?
 You need unity3d installed (5.3 and above recommended) with unity webgl module. And of course, you need google chrome on your computer.
 ### Todos
 
+ - Fix template manager so it works EXACTLY as the internal unity template manager
  - Add demo scene (one that doesn't suck)
  - Implement getAuthToken
  - Add more chrome APIs (Notifications, Native sockets, In-app purchase and so on)
