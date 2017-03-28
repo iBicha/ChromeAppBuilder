@@ -306,7 +306,11 @@ namespace ChromeAppBuilder
                 EditorGUILayout.Space ();
 				GUILayout.Label("Permissions", EditorStyles.boldLabel, new GUILayoutOption[0]);
 				scrollPos= EditorGUILayout.BeginScrollView (scrollPos, EditorStyles.helpBox, GUILayout.MinHeight(110f) );
-				for (int i = 0; i < BuildSettings.Get.permissions.Length; i++) {
+                if (BuildSettings.Get.permissions.Length != (int)Permissions.Count)
+                {
+                    System.Array.Resize(ref BuildSettings.Get.permissions, (int)Permissions.Count);
+                }
+                for (int i = 0; i < BuildSettings.Get.permissions.Length; i++) {
 					BuildSettings.Get.permissions[i] = EditorGUILayout.ToggleLeft (((Permissions)i).Name(), BuildSettings.Get.permissions[i]);
 				}
 				EditorGUILayout.EndScrollView ();
