@@ -56,15 +56,19 @@ namespace ChromeAppBuilder
 			manifest.short_name = BuildSettings.Get.shortName;
 			manifest.version = PlayerSettings.bundleVersion;
 			manifest.version_name = PlayerSettings.bundleVersion;
-			manifest.icons = new Dictionary<string, object> ();
 			string iconsFolder = Path.Combine (path, "Icons");
 			if (Directory.Exists (iconsFolder)) {
-				int[] iconSizes = new int[]{ 16, 48, 128 };
+                Dictionary<string, object> icons = new Dictionary<string, object>();
+                int[] iconSizes = new int[]{ 16, 48, 128 };
 				foreach (int size in iconSizes) {
 					if (File.Exists (Path.Combine (iconsFolder, "icon" + size.ToString () + ".png"))) {
-						manifest.icons [size.ToString ()] = "Icons/icon" + size.ToString () + ".png";
+                        icons[size.ToString ()] = "Icons/icon" + size.ToString () + ".png";
 					}
 				}
+                if (icons.Count > 0)
+                {
+                    manifest.icons = icons;
+                }
 			}
 			for (int i = 0; i < (int)Permissions.Count; i++) {
 				if (BuildSettings.Get.permissions [i]) {
