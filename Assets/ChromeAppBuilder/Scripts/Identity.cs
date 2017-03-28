@@ -53,6 +53,11 @@ namespace Chrome.App
 		/// </summary>
 		public static event Action<UserInfo> onSignInChanged;
 
+        //this is never called
+        private static void FakeFuncSilentWarning()
+        {
+            onSignInChanged = null;
+        }
 	}
 
 }
