@@ -12,6 +12,7 @@ namespace ChromeAppBuilder
         videoCapture,
         audioCapture,
         fullscreen,
+        storage,
         alwaysOnTop,
         pointerLock,
         browser,
@@ -36,6 +37,8 @@ namespace ChromeAppBuilder
                     return "videoCapture";
                 case Permissions.fullscreen:
                     return "app.window.fullscreen";
+                case Permissions.storage:
+                    return "storage";
                 case Permissions.alwaysOnTop:
                     return "app.window.alwaysOnTop";
                 case Permissions.pointerLock:
@@ -86,6 +89,8 @@ namespace ChromeAppBuilder
                     return "Record audio (Microphone)";
                 case Permissions.fullscreen:
                     return "Fullscreen";
+                case Permissions.storage:
+                    return "Storage";
                 case Permissions.pointerLock:
                     return "Cursor Lock";
                 case Permissions.browser:
