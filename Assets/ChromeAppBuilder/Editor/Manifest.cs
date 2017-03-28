@@ -85,8 +85,16 @@ namespace ChromeAppBuilder
 						}
 					}
 				} 
-			} 
-			JsonSerializerSettings settings = new JsonSerializerSettings () {
+			}
+            string[] extraPermissions = BuildSettings.Get.permissionsExtra.Split(new string[] { "\r\n", "\n" },System.StringSplitOptions.RemoveEmptyEntries);
+            foreach (var extraPermission in extraPermissions)
+            {
+                if (!manifest.permissions.Contains(extraPermission))
+                {
+                    manifest.permissions.Add(extraPermission);
+                }
+            }
+            JsonSerializerSettings settings = new JsonSerializerSettings () {
 				Formatting = Formatting.Indented,
 				NullValueHandling = NullValueHandling.Ignore
 			};

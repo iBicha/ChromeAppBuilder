@@ -34,6 +34,7 @@ namespace ChromeAppBuilder
 		public Texture2D[] icons = new Texture2D[3];
 
 		public bool[] permissions = new bool[(int)Permissions.Count];
+        public string permissionsExtra = "";
 
 		public bool packExtension = true;
 		public bool updateExtension = false;

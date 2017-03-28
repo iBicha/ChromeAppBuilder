@@ -310,9 +310,12 @@ namespace ChromeAppBuilder
 					BuildSettings.Get.permissions[i] = EditorGUILayout.ToggleLeft (((Permissions)i).Name(), BuildSettings.Get.permissions[i]);
 				}
 				EditorGUILayout.EndScrollView ();
-
-				EditorGUILayout.Space ();
-				GUILayout.Label("Packing", EditorStyles.boldLabel, new GUILayoutOption[0]);
+                EditorGUILayout.Space ();
+                GUILayout.Label("Extra Permissions", EditorStyles.boldLabel, new GUILayoutOption[0]);
+                GUILayout.Label("(one per line)");
+                BuildSettings.Get.permissionsExtra = EditorGUILayout.TextArea(BuildSettings.Get.permissionsExtra, GUILayout.MinHeight(50));
+                EditorGUILayout.Space();
+                GUILayout.Label("Packing", EditorStyles.boldLabel, new GUILayoutOption[0]);
 				BuildSettings.Get.packExtension = EditorGUILayout.BeginToggleGroup ("Pack Extension", BuildSettings.Get.packExtension);
 				BuildSettings.Get.updateExtension = EditorGUILayout.BeginToggleGroup ("Update", BuildSettings.Get.updateExtension);
 				GUI.enabled = BuildSettings.Get.updateExtension;
