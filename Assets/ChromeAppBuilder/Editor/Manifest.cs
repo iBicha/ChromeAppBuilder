@@ -125,7 +125,7 @@ namespace ChromeAppBuilder
 			}
 			string manifestContent = File.ReadAllText (path);
 			JObject ob = JObject.Parse (manifestContent);
-			ob.Add ("key", key);
+            ob["key"] = key;
 			manifestContent = ob.ToString ();
 			File.WriteAllText (path, manifestContent);
 		}
