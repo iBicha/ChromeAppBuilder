@@ -10,32 +10,25 @@ using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
 public class WebRequest : MonoBehaviour {
-	/// <summary>
-	///     Retrieves information about the specified window. 
-	///     The function also retrieves the value at a specified offset into the extra window memory.
-	///     From <see cref="!:https://msdn.microsoft.com/en-us/library/windows/desktop/ms633585(v=vs.85).aspx">this</see> MSDN-Link.
-	///     AHref <a href="http://stackoverflow.com">here</a>.
-	///     see-href <see href="http://stackoverflow.com">here</see>.
-	/// </summary>
-	/// <param name="hwnd"></param>
-	/// <param name="index"></param>
-	/// <returns>
-	///     Testlink in return: <a href="http://stackoverflow.com">here</a>
-	/// </returns>
-	public static void Get(string url, Action<WWW> callback, Dictionary<string, string> headers=null){
+	public static void Get(string url, Action<DownloadHandler> callback, Dictionary<string, string> headers=null){
 		GameObject go = new GameObject ("{WebRequest}");
 		WebRequest req = go.AddComponent<WebRequest> ();
-		req.url = url;
-		req.headers = headers;
 		req.OnResponse = callback;
+
+		req.uRequest = UnityWebRequest.Get (url);
+		if(headers != null) {
+			foreach (string header in headers.Keys) {
+				req.uRequest.SetRequestHeader (header, headers [header]);
+			}
+		}
 		req.Send();
 	}
 
-	private Action<WWW> OnResponse;
-	private string url;
-	private Dictionary<string, string> headers;
+	UnityWebRequest uRequest;
+	private Action<DownloadHandler> OnResponse;
 
 	private void Send () {
 		Destroy (gameObject, 30); //30 seconds timeout
@@ -44,11 +37,10 @@ public class WebRequest : MonoBehaviour {
 	
 
 	private IEnumerator GetResponse(){
-		WWW req = new WWW(url,null,headers);
-		yield return req;
-		Action<WWW> handler = OnResponse;
+		yield return uRequest.Send();
+		Action<DownloadHandler> handler = OnResponse;
 		if (handler != null) {
-			handler (req);
+			handler (uRequest.downloadHandler);
 		}
 		Destroy (gameObject);
 	}

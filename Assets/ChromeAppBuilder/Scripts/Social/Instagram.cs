@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using UnityEngine.Networking;
 
 namespace Chrome.Social
 {
@@ -63,7 +64,7 @@ namespace Chrome.Social
 					User user = new User(res.text);
 					WebRequest.Get (user.PictureUrl, (res2) => {
 						if (res2.isDone) {
-							user.Picture = res2.texture;
+							user.Picture = ((DownloadHandlerTexture)res2).texture;
 						} else {
 							//well, profile picture wasn't downloaded. no biggy.
 						}
