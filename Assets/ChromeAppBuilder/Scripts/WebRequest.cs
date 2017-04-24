@@ -12,36 +12,80 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 
-public class WebRequest : MonoBehaviour {
-	public static void Get(string url, Action<DownloadHandler> callback, Dictionary<string, string> headers=null){
-		GameObject go = new GameObject ("{WebRequest}");
-		WebRequest req = go.AddComponent<WebRequest> ();
-		req.OnResponse = callback;
+public class WebRequest : MonoBehaviour
+{
+    public static void Get(string url, Action<DownloadHandler> callback, Dictionary<string, string> headers = null)
+    {
+        GameObject go = new GameObject("{WebRequest}");
+        WebRequest req = go.AddComponent<WebRequest>();
+        req.OnResponse = callback;
 
-		req.uRequest = UnityWebRequest.Get (url);
-		if(headers != null) {
-			foreach (string header in headers.Keys) {
-				req.uRequest.SetRequestHeader (header, headers [header]);
-			}
-		}
-		req.Send();
-	}
+        req.uRequest = UnityWebRequest.Get(url);
+        if (headers != null)
+        {
+            foreach (string header in headers.Keys)
+            {
+                req.uRequest.SetRequestHeader(header, headers[header]);
+            }
+        }
+        req.Send();
+    }
 
-	UnityWebRequest uRequest;
-	private Action<DownloadHandler> OnResponse;
+    public static void GetTexture(string url, Action<DownloadHandler> callback, Dictionary<string, string> headers = null)
+    {
+        GameObject go = new GameObject("{WebRequest}");
+        WebRequest req = go.AddComponent<WebRequest>();
+        req.OnResponse = callback;
 
-	private void Send () {
-		Destroy (gameObject, 30); //30 seconds timeout
-		StartCoroutine (GetResponse());
-	}
-	
+        req.uRequest = new UnityWebRequest(url, UnityWebRequest.kHttpVerbGET, new DownloadHandlerTexture(), null);
+        if (headers != null)
+        {
+            foreach (string header in headers.Keys)
+            {
+                req.uRequest.SetRequestHeader(header, headers[header]);
+            }
+        }
 
-	private IEnumerator GetResponse(){
-		yield return uRequest.Send();
-		Action<DownloadHandler> handler = OnResponse;
-		if (handler != null) {
-			handler (uRequest.downloadHandler);
-		}
-		Destroy (gameObject);
-	}
+        req.Send();
+    }
+
+
+    public static void Post(string url, Dictionary<string, string> formFields, Action<DownloadHandler> callback, Dictionary<string, string> headers = null)
+    {
+        GameObject go = new GameObject("{WebRequest}");
+        WebRequest req = go.AddComponent<WebRequest>();
+        req.OnResponse = callback;
+
+        req.uRequest = UnityWebRequest.Post(url, formFields);
+        if (headers != null)
+        {
+            foreach (string header in headers.Keys)
+            {
+                req.uRequest.SetRequestHeader(header, headers[header]);
+            }
+        }
+        req.Send();
+    }
+
+
+    private UnityWebRequest uRequest;
+    private Action<DownloadHandler> OnResponse;
+
+    private void Send()
+    {
+        Destroy(gameObject, 30); //30 seconds timeout
+        StartCoroutine(GetResponse());
+    }
+
+
+    private IEnumerator GetResponse()
+    {
+        yield return uRequest.Send();
+        Action<DownloadHandler> handler = OnResponse;
+        if (handler != null)
+        {
+            handler(uRequest.downloadHandler);
+        }
+        Destroy(gameObject);
+    }
 }
