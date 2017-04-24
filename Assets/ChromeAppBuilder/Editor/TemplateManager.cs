@@ -163,7 +163,7 @@ namespace ChromeAppBuilder
 
 
 
-		/*private static Type tyWebGlBuildPostprocessor;
+        /*private static Type tyWebGlBuildPostprocessor;
 		private static Type tyBuildPostProcessArgs;
 
 		private static MethodInfo MIProcessTemplateFile;
@@ -176,7 +176,7 @@ namespace ChromeAppBuilder
 			if (tyWebGlBuildPostprocessor != null) {
 				if (MIProcessTemplateFile == null) {
 					if (tyBuildPostProcessArgs == null) {
-						tyWebGlBuildPostprocessor = Assembly.GetAssembly (typeof(UnityEditor.Editor)).GetType ("UnityEditor.Modules.BuildPostProcessArgs");
+						tyBuildPostProcessArgs = Assembly.GetAssembly (typeof(UnityEditor.Editor)).GetType ("UnityEditor.Modules.BuildPostProcessArgs");
 					}
 					MIProcessTemplateFile = tyWebGlBuildPostprocessor.GetMethod ("ProcessTemplateFile", BindingFlags.NonPublic | BindingFlags.Static, null, new Type[] {
 						tyWebGlBuildPostprocessor,
@@ -190,5 +190,5 @@ namespace ChromeAppBuilder
 			return string.Empty;
 		}*/
 
-	}
+    }
 }
