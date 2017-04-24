@@ -11,13 +11,12 @@ namespace Chrome.Social
 {
 	public class Instagram : OAuth<Instagram>
 	{
-
-		public event Action<User> OnConnect;
+		public event Action<string> OnAccessToken;
+		public event Action<User> OnUserInfo;
 
 		public Instagram () : base ("Instagram")
 		{
 			AuthURL = "https://instagram.com/oauth/authorize";
-			ClientID = "<CLIENT_ID_HERE>";
 		}
 
 		//Instagram returns Url fragments.
@@ -35,21 +34,25 @@ namespace Chrome.Social
 			if (parameters.ContainsKey (key)) {
 				return parameters [key];
 			}
-			return "";
+			return null;
 		}
 
-		public override void Authenticate (bool interactive, Action callback = null)
+		public override void Authenticate (bool interactive)
 		{
 			LaunchFlow (interactive, (responsetUrl) => {
-				Debug.Log ("responsetUrl:" + responsetUrl);
-				string token = GetUrlParameter (responsetUrl, "access_token");
-				if (token != "") {
-					AccessToken = token;
-					Debug.Log ("AccessToken:" + AccessToken);
-					if (callback != null) {
-						callback ();
+				string access_token = GetUrlParameter (responsetUrl, "access_token");
+				Action<string> OnAccessTokenHandler = OnAccessToken;
+				Action<User> OnUserInfoHandler = OnUserInfo;
+				if((OnAccessTokenHandler != null) || (OnUserInfoHandler != null)) {
+					if(!string.IsNullOrEmpty (access_token)) {
+						AccessToken = access_token;
+						if(OnAccessTokenHandler != null) {
+							OnAccessTokenHandler(AccessToken);
+						}
+						if(OnUserInfoHandler != null) {
+							GetUserInfo();
+						}
 					}
-					GetUserInfo();
 				}
 			}); 
 		}
@@ -61,16 +64,16 @@ namespace Chrome.Social
 			parameters.Add ("access_token", AccessToken);
 			WebRequest.Get (UrlEncode (baseUrl, parameters), (res) => {
 				if (res.isDone) {
-					User user = new User(res.text);
-					WebRequest.Get (user.PictureUrl, (res2) => {
+					InstagramUser user = new InstagramUser(res.text);
+					WebRequest.GetTexture (user.PictureUrl, (res2) => {
 						if (res2.isDone) {
 							user.Picture = ((DownloadHandlerTexture)res2).texture;
 						} else {
 							//well, profile picture wasn't downloaded. no biggy.
 						}
-						Action<User> handler = OnConnect;
-						if (handler != null) {
-							handler (user);
+						Action<User> OnUserInfoHandler = OnUserInfo;
+						if(OnUserInfoHandler != null) {
+							OnUserInfoHandler (user);
 						}
 					});
 
@@ -85,10 +88,18 @@ namespace Chrome.Social
 			throw new NotImplementedException ();
 		}
 
-		public class User
+		public class InstagramUser : User
 		{
+			public string Bio;
+			public string Username;
+			public string FullName;
+			public string Website;
+			public int Media;
+			public int FollowedBy;
+			public int Follows;
+
 			//Nested Properties cannot be handled by annotations. let's do it manually, i guess.
-			public User(string jsonString){
+			public InstagramUser(string jsonString){
 				IDictionary<string, JToken> json = JsonConvert.DeserializeObject<Dictionary<string, JToken>>(jsonString);
 				if((int)(json["meta"]["code"])==200){
 					this.ID = (string)json["data"]["id"];
@@ -101,24 +112,6 @@ namespace Chrome.Social
 					this.FollowedBy = (int)json["data"]["counts"]["followed_by"];
 					this.Follows = (int)json["data"]["counts"]["follows"];
 				}
-			}
-			public string ID;
-			public string Username;
-			public string Bio;
-			public string Website;
-			public string FullName;
-			[JsonIgnore]
-			public Texture Picture;
-			public string PictureUrl;
-
-			public int Media;
-			public int FollowedBy;
-			public int Follows;
-
-
-			public override string ToString ()
-			{
-				return JsonConvert.SerializeObject (this, Formatting.Indented);
 			}
 		}
 	}

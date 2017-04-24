@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Newtonsoft.Json;
 
 
 namespace Chrome.Social
@@ -100,7 +101,7 @@ namespace Chrome.Social
 			if (parameters.ContainsKey (key)) {
 				return parameters [key];
 			}
-			return "";
+			return null;
 		}
 
 		protected void LaunchFlow (bool interactive, LaunchFlowCallback callback, string url = null)
@@ -121,9 +122,10 @@ namespace Chrome.Social
 #endif
 		}
 
-		public abstract void Authenticate (bool interactive, Action callback = null);
+		public abstract void Authenticate (bool interactive);
 
 		public abstract void Deauthorize ();
+
 
 	}
 }
