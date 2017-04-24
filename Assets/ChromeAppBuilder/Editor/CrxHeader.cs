@@ -32,25 +32,31 @@ namespace ChromeAppBuilder
 			}
 		}
 
-		public CrxHeader (string filename)
-		{
-			if (File.Exists (filename)) {
-				FileStream fs = new FileStream (filename, FileMode.Open);
-				BinaryReader br = new BinaryReader (fs);
-
-				this.magic_number = br.ReadChars (4);
-				if (new string (this.magic_number) != "Cr24") {
-					throw new System.Exception ("Invalid .crx file header : magic_number.");
-				}
-				this.version = br.ReadUInt32 ();
-				if (this.version != 2) {
-					throw new System.Exception ("this version of .crx file is currently unsupported.");
-				}
-				this.public_key_length = br.ReadUInt32 ();
-				this.signature_length = br.ReadUInt32 ();
-				this.public_key = br.ReadBytes ((int)this.public_key_length);
-				this.signature = br.ReadBytes ((int)this.signature_length);
-			}
-		}
-	}
+        public CrxHeader(string filename)
+        {
+            if (File.Exists(filename))
+            {
+                using (FileStream fs = new FileStream(filename, FileMode.Open))
+                {
+                    using (BinaryReader br = new BinaryReader(fs))
+                    {
+                        this.magic_number = br.ReadChars(4);
+                        if (new string(this.magic_number) != "Cr24")
+                        {
+                            throw new System.Exception("Invalid .crx file header : magic_number.");
+                        }
+                        this.version = br.ReadUInt32();
+                        if (this.version != 2)
+                        {
+                            throw new System.Exception("this version of .crx file is currently unsupported.");
+                        }
+                        this.public_key_length = br.ReadUInt32();
+                        this.signature_length = br.ReadUInt32();
+                        this.public_key = br.ReadBytes((int)this.public_key_length);
+                        this.signature = br.ReadBytes((int)this.signature_length);
+                    }
+                }
+            }
+        }
+    }
 }
