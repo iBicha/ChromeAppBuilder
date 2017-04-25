@@ -26,6 +26,7 @@ namespace Chrome.Social
 		public static T Instance
 		{
 			get { return GetInstance(); }
+			set { _instance = value; }
 		}
 
 		private volatile static T _instance;
