@@ -233,9 +233,17 @@ namespace ChromeAppBuilder
 		}
 		void SplashSectionGUI(){
 			if (BeginSettingsBox (4, new GUIContent ("Splash Image"))) {
-				EditorGUI.BeginDisabledGroup(!UnityEditorInternal.InternalEditorUtility.HasAdvancedLicenseOnBuildTarget(BuildTarget.WebGL));
-				PlayerSettings.SplashScreen.show = EditorGUILayout.Toggle ("Show Unity Splash Screen*", PlayerSettings.SplashScreen.show, new GUILayoutOption[0]);
-				EditorGUI.EndDisabledGroup();
+				EditorGUILayout.Space ();
+				EditorGUILayout.HelpBox ("Check the \"Splash Image\" section of the WebGL Player Settings.", MessageType.Info); 
+				EditorGUILayout.BeginHorizontal ();
+				GUILayout.FlexibleSpace ();
+				if (GUILayout.Button(new GUIContent("Player Settings..."), GUILayout.Width(150)))
+				{
+					Selection.activeObject = Unsupported.GetSerializedAssetInterfaceSingleton("PlayerSettings");
+
+				}
+				GUILayout.Space (10);
+				EditorGUILayout.EndHorizontal ();
 				ShowSharedNote ();
 			}
 			EndSettingsBox ();
