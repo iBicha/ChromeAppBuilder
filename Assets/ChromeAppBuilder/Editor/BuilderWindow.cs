@@ -107,7 +107,7 @@ namespace ChromeAppBuilder
 			}else {
 				EditorGUILayout.HelpBox ("Switch To WebGL to build a Chrome App.", MessageType.Warning);
 				if (GUILayout.Button ("Switch To WebGL")) {
-					EditorUserBuildSettings.SwitchActiveBuildTarget (BuildTarget.WebGL);
+					EditorUserBuildSettings.SwitchActiveBuildTarget (BuildTargetGroup.WebGL, BuildTarget.WebGL);
 				}
 			}
 		}

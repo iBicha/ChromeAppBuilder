@@ -13,7 +13,7 @@ No, but it should be. I guess i should do that, soon?
 ### Requirement
 You need unity3d installed (~~5.3 and above recommended~~ you probably need the latest version, since Chrome app builder uses private unity apis that keep changing all the time, and we try to keep up and update it. so best way is to test.) with unity webgl module. And of course, you need google chrome on your computer.
 
-Last commit worked with: Unity 5.5.1f1
+Last commit worked with: Unity 5.6.1f1
 ### Todos
 
  - Fix template manager so it works EXACTLY as the internal unity template manager
