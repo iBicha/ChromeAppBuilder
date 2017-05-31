@@ -1,7 +1,8 @@
 # Chrome App Builder
 Chrome app builder is an editor extension and API for Unity3D to export games as google chrome apps. It is designed to look just like the build settings of other platforms.
 
-![](https://raw.github.com/iBicha/ChromeAppBuilder/master/Screenshots/screen1.png)      ![](https://raw.github.com/iBicha/ChromeAppBuilder/master/Screenshots/screen2.png)      ![](https://raw.github.com/iBicha/ChromeAppBuilder/master/Screenshots/screen3.png)
+<img src="https://raw.github.com/iBicha/ChromeAppBuilder/master/Screenshots/screen1.png" height="420">    <img src="https://raw.github.com/iBicha/ChromeAppBuilder/master/Screenshots/screen2.png" height="420">    <img src="https://raw.github.com/iBicha/ChromeAppBuilder/master/Screenshots/screen3.png" height="420">
+
 ### How does it work?
 Mostly, it is based on the webgl player of unity. Combined with a template, and and an extension to fix the chrome related stuff, and it's all good.
 In addition, it offers an API to access chrome functions from within unity.
