@@ -1,14 +1,15 @@
 ﻿const ChromeAppWindowPrefix = "ChromeApp_Window_";
 
 var ChromeHelper = {
-	ToCsString: function(str)
+    ToCsString: function (str) 
     {
-		if(typeof str === 'object'){
-			str = JSON.stringify(str);
-		}
-		var buffer = _malloc(lengthBytesUTF8(str) + 1);
-		writeStringToMemory(str, buffer);
-		return buffer;
+        if (typeof str === 'object') {
+            str = JSON.stringify(str);
+        }
+        var bufferLength = lengthBytesUTF8(str) + 1;
+        var buffer = _malloc(bufferLength);
+        stringToUTF8(str, buffer, bufferLength);
+        return buffer;
     },
 	ToJsString: function(ptr)
     {

@@ -1,14 +1,16 @@
 ﻿const ChromeAppBrowserPrefix = "ChromeApp_Browser_";
 
 var ChromeHelper = {
-	ToCsString : function (str) {
-		if (typeof str === 'object') {
-			str = JSON.stringify(str);
-		}
-		var buffer = _malloc(lengthBytesUTF8(str) + 1);
-		writeStringToMemory(str, buffer);
-		return buffer;
-	},
+    ToCsString: function (str) 
+    {
+        if (typeof str === 'object') {
+            str = JSON.stringify(str);
+        }
+        var bufferLength = lengthBytesUTF8(str) + 1;
+        var buffer = _malloc(bufferLength);
+        stringToUTF8(str, buffer, bufferLength);
+        return buffer;
+    },
 	ToJsString : function (ptr) {
 		return Pointer_stringify(ptr);
 	},
