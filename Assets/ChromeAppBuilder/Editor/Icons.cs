@@ -50,7 +50,12 @@ namespace ChromeAppBuilder {
 		{
 			Texture2D[] icons = PlayerSettings.GetIconsForTargetGroup (0);
 			if (icons==null || icons.Length == 0 || icons [0]==null) {
-				return;
+				Texture2D logo = AssetDatabase.LoadAssetAtPath<Texture2D> ("Assets/ChromeAppBuilder/Editor/Resources/logo.png");
+				if (logo == null) {
+					return;
+				}
+				icons = new Texture2D[1];
+				icons [0] = logo;
 			}
 			int MinDiff = icons [0].width - size;
 			int index = 0;
