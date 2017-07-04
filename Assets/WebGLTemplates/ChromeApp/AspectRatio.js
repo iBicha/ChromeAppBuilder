@@ -1,11 +1,11 @@
 (function() {
 	var currentWindow = chrome.app.window.current();
-	var canvas = document.getElementById("canvas");
+	var gameContainer = document.getElementById("gameContainer");
 	
 	var originalWidth = %UNITY_WIDTH%;
 	var originalHeight = %UNITY_HEIGHT%;
 	
-	function ResizeCanvas(){
+	function ResizeContainer(){
 		if(currentWindow.isFullscreen()){
 			var screenWidth = currentWindow.outerBounds.width;
 			var screenHeight = currentWindow.outerBounds.height;
@@ -20,21 +20,21 @@
 			var x = screenWidth/2 - width/2;
 			var y = screenHeight/2 - height/2;
 			
-			canvas.style.left = x + 'px';
-			canvas.style.top = y + 'px';
-			canvas.width = width;
-			canvas.height = height;		  
+			gameContainer.style.left = x + 'px';
+			gameContainer.style.top = y + 'px';
+			gameContainer.width = width;
+			gameContainer.height = height;		  
 		}else{
-			canvas.width = screenWidth;
-			canvas.height = screenHeight;		  
+			gameContainer.width = screenWidth;
+			gameContainer.height = screenHeight;		  
 		}
 	}
 	
-	currentWindow.onBoundsChanged.addListener(ResizeCanvas);
-	currentWindow.onFullscreened.addListener(ResizeCanvas);
-	currentWindow.onMaximized.addListener(ResizeCanvas);
-	currentWindow.onRestored.addListener(ResizeCanvas);
+	currentWindow.onBoundsChanged.addListener(ResizeContainer);
+	currentWindow.onFullscreened.addListener(ResizeContainer);
+	currentWindow.onMaximized.addListener(ResizeContainer);
+	currentWindow.onRestored.addListener(ResizeContainer);
  	
-	ResizeCanvas();
+	ResizeContainer();
 	
 })();

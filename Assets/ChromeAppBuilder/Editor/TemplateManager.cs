@@ -20,7 +20,7 @@ namespace ChromeAppBuilder
 
 		public static void ProcessTemplateFiles (string path)
 		{
-			string[] files = new string[]{"AspectRatio.js", "Background.js","Config.js","index.html"};
+			string[] files = new string[]{"AspectRatio.js", "Background.js","index.html", "Loader.js"};
 			foreach (string file in files) {
 				ProcessTemplateFile(path, file);
 			}	
@@ -28,6 +28,7 @@ namespace ChromeAppBuilder
 
 		public static void ProcessTemplateFile (string path,string file)
 		{
+			string buildName = Path.GetFileName (path);
             string fullpath = Path.Combine(path, file);
             if (!File.Exists(fullpath))
             {
@@ -37,66 +38,8 @@ namespace ChromeAppBuilder
             filecontent = filecontent.Replace ("%UNITY_WIDTH%", PlayerSettings.defaultWebScreenWidth.ToString ());
 			filecontent = filecontent.Replace ("%UNITY_HEIGHT%", PlayerSettings.defaultWebScreenHeight.ToString ());
 			filecontent = filecontent.Replace ("%UNITY_WEB_NAME%", PlayerSettings.productName);
-			filecontent = filecontent.Replace ("%UNITY_DEVELOPMENT_PLAYER%", EditorUserBuildSettings.development ? "1" : "0");
-			//filecontent = filecontent.Replace ("%UNITY_WEBGL_LOADER_GLUE%", EmscriptenPaths.buildToolsDir + "WebGLLoaderGlue.html");
-			filecontent = filecontent.Replace ("%UNITY_WEBGL_BACKGROUND_COLOR%", "#" + ColorUtility.ToHtmlStringRGB (PlayerSettings.SplashScreen.backgroundColor));
-			filecontent = filecontent.Replace ("%UNITY_WEBGL_SPLASH_STYLE%", (PlayerSettings.SplashScreen.unityLogoStyle != PlayerSettings.SplashScreen.UnityLogoStyle.DarkOnLight) ? "Light" : "Dark");
-			filecontent = filecontent.Replace ("%UNITY_WEBGL_DATA_FOLDER%", EditorUserBuildSettings.development ? "Development" : "Release");
-			filecontent = filecontent.Replace ("%UNITY_WEBGL_FILE_NAME%", Path.GetFileName (path));
-			filecontent = filecontent.Replace ("%UNITY_WEBGL_MAIN_MODULE_FILE_NAME%", EditorUserBuildSettings.webGLUsePreBuiltUnityEngine ? "UnityEngine" : Path.GetFileName (path));
-			filecontent = filecontent.Replace ("%UNITY_WEBGL_TOTAL_MEMORY%", ((uint)((PlayerSettings.WebGL.memorySize * 0x400) * 0x400)).ToString ());
-			// //UNITY_WEBGL_WASM_BINARY_FILE
-			// list.Add ("%UNITY_WEBGL_WASM_BINARY_FILE%");
-			// if (PlayerSettings.WebGL.useWasm) {
-			// 	list.Add (string.Concat (new string[] {
-			// 		"
-			// 		wasmBinaryFile: "",
-			// 		WebGlBuildPostprocessor.DataFolderName (args),
-			// 		"/",
-			// 		Path.GetFileName (args.installPath),
-			// 		".wasm",
-			// 		wasmJSMethod: "native-wasm,asmjs","
-			// 	}));
-			// }
-			// else {
-			// 	list.Add ("");
-			// }
-			// //UNITY_WEBGL_DEBUG_SYMBOLS_URL
-			// list.Add ("%UNITY_WEBGL_DEBUG_SYMBOLS_URL%");
-			// if (!flag && PlayerSettings.WebGL.debugSymbols) {
-			// 	list.Add (string.Concat (new string[] {
-			// 		"
-			// 		debugSymbolsUrl: "",
-			// 		WebGlBuildPostprocessor.DataFolderName (args),
-			// 		"/",
-			// 		Path.GetFileName (args.installPath),
-			// 		".debugSymbols.js","
-			// 	}));
-			// }
-			// else {
-			// 	list.Add ("");
-			// }
-			// //UNITY_WEBGL_DINAMIC_LIBRARIES
-			// list.Add ("%UNITY_WEBGL_DINAMIC_LIBRARIES%");
-			// list.Add ((!flag2) ? "" : string.Concat (new string[] {
-			// 	"
-			// 	dynamicLibraries: ["",
-			// 		WebGlBuildPostprocessor.DataFolderName (args),
-			// 		"/",
-			// 		Path.GetFileName (args.installPath),
-			// 		".js"],"
-			// }));
-			// //UNITY_WEBGL_BACKGROUND_IMAGE
-			// list.Add ("%UNITY_WEBGL_BACKGROUND_IMAGE%");
-			// string text = WebGlBuildPostprocessor.WriteBackgroundImage (args);
-			// if (text != null) {
-			// 	list.Add ("backgroundImage: "" + text + "",");
-			// }
-			// else {
-			// 	list.Add ("");
-			// }
-
-			filecontent = filecontent.Replace ("fetchRemotePackage(REMOTE_PACKAGE_NAME", "fetchRemotePackageWrapper(REMOTE_PACKAGE_NAME");
+			filecontent = filecontent.Replace ("%UNITY_WEBGL_LOADER_URL%", "Build/UnityLoader.js");
+			filecontent = filecontent.Replace ("%UNITY_WEBGL_BUILD_URL%", "Build/" + buildName + ".json");
 
 			/*
 			 * Custom values requires System.Reflection, and will fail silently in case methods didn't load 
