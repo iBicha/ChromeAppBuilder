@@ -77,7 +77,7 @@ namespace ChromeAppBuilder {
 		 * back.
 		 * 2-because texture resizing in unity only resizes memory, and not the data.
 		 * dear unity, if i wanted to do that, i would dispose of the texture, and
-		 * create a new one with the desired size. Please don't be stupid.
+		 * create a new one with the desired size.
 		 */
 		public static byte[] LoadTexture(Texture2D tex, int newSize = 0){
 			bool wasReadable = SetTextureImporterFormat (tex, true);
