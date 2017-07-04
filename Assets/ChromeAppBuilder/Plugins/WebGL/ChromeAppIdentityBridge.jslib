@@ -87,7 +87,7 @@ var ChromeBridgeIdentityPlugin = {
 		chrome.identity.onSignInChanged.addListener(function(account, signedIn){
 			account.signedIn = signedIn;
 			account = ChromeHelper.ToCsString(account);
-			Runtime.dynCall('vi', callback, [account, callbackId]);
+			Runtime.dynCall('vii', callback, [account, callbackId]);
 			ChromeHelper.FreeMemory(account);
 		});
     }
