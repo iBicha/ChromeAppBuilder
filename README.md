@@ -19,7 +19,7 @@ Last commit worked with: Unity 5.6.1f1
  - Fix template manager so it works EXACTLY as the internal unity template manager
  - Add demo scene (one that doesn't suck)
  - Implement getAuthToken
- - Add more chrome APIs (Notifications, Native sockets, In-app purchase and so on)
+ - Add more chrome APIs (Native sockets, In-app purchase and so on)
  - Add a setting for facebook and instagram client id (currently need to set in the code) and maybe add more social media and such 
  - Create good documentation
  - Create a permission and a minimum chrome version detector
