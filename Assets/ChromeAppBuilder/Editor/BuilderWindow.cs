@@ -50,8 +50,8 @@ namespace ChromeAppBuilder
 	 
 		void OnGUI ()
 		{
-#if !UNITY_5
-			EditorGUILayout.HelpBox ("Unity 5 Required to build chrome apps.", MessageType.Error);
+#if !UNITY_5 && !UNITY_5_3_OR_NEWER
+			EditorGUILayout.HelpBox ("Unity 5 or newer required to build chrome apps.", MessageType.Error);
 			return;
 #endif
 
