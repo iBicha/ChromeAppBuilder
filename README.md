@@ -1,3 +1,6 @@
+##### Disclaimer: Google is trying to get rid of Chrome apps on Windows, OS X and Linux in favor of webapps and Chrome extensions. The best use of this editor extension is for targeting ChromeOS which "*will remain supported and maintained for the foreseeable future.*"
+###### read more about it here: https://blog.chromium.org/2016/08/from-chrome-apps-to-web.html
+
 # Chrome App Builder
 Chrome app builder is an editor extension and API for Unity3D to export games as google chrome apps. It is designed to look just like the build settings of other platforms.
 
