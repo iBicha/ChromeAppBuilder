@@ -1,7 +1,16 @@
 (function() {
 	var currentWindow = chrome.app.window.current();
 	var gameContainer = document.getElementById("gameContainer");
-	
+	var canvas;
+	var tries = 0;
+	var canvasCheck = setInterval(function(){
+		canvas = document.querySelector("canvas");
+		tries ++;
+		if(canvas || tries > 20) {
+			clearInterval(canvasCheck);
+		}
+	},500)
+
 	var originalWidth = %UNITY_WIDTH%;
 	var originalHeight = %UNITY_HEIGHT%;
 	
@@ -24,9 +33,19 @@
 			gameContainer.style.top = y + 'px';
 			gameContainer.width = width;
 			gameContainer.height = height;		  
+			if(canvas) {
+				canvas.style.left = x + 'px';
+				canvas.style.top = y + 'px';
+				canvas.width = width;
+				canvas.height = height;
+			}
 		}else{
 			gameContainer.width = screenWidth;
 			gameContainer.height = screenHeight;		  
+			if(canvas) {
+				canvas.width = screenWidth;
+				canvas.height = screenHeight;		  
+			}
 		}
 	}
 	
