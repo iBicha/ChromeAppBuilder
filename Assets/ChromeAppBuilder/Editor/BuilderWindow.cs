@@ -149,7 +149,9 @@ namespace ChromeAppBuilder
 					}
                 }
                 EditorUserBuildSettings.connectProfiler = EditorGUILayout.ToggleLeft ("Autoconnect Profiler*", EditorUserBuildSettings.connectProfiler);
-				GUI.enabled = true;
+                EditorUserBuildSettings.buildScriptsOnly = EditorGUILayout.ToggleLeft("Scripts Only Build*", EditorUserBuildSettings.buildScriptsOnly);
+
+                GUI.enabled = true;
 				ShowSharedNote ();
 			}
 			EndSettingsBox ();
@@ -284,9 +286,9 @@ namespace ChromeAppBuilder
                 }
                 GUI.changed = false;
                 WebGLExceptionSupport = (WebGLExceptionSupport)EditorGUILayout.EnumPopup("Enable Exceptions*", PlayerSettings.WebGL.exceptionSupport);
-                if (WebGLExceptionSupport == WebGLExceptionSupport.Full)
+                if (WebGLExceptionSupport == WebGLExceptionSupport.FullWithStacktrace)
                 {
-                    EditorGUILayout.HelpBox("Full exception support adds a lot of code to do sanity checks, which costs a lot of performance and browser memory. Only use this for debugging, and make sure to test in a 64-bit browser.", MessageType.Warning);
+                    EditorGUILayout.HelpBox("'Full With Stacktrace' exception will decrease performance and increase browser memory usage. Only use this for debugging purposes, and make sure to test in a 64-bit browser.", MessageType.Warning);
                 }
                 if (GUI.changed)
                 {

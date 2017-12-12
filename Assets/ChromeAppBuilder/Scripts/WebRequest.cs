@@ -76,11 +76,11 @@ public class WebRequest : MonoBehaviour
         Destroy(gameObject, 30); //30 seconds timeout
         StartCoroutine(GetResponse());
     }
-
+     
 
     private IEnumerator GetResponse()
     {
-        yield return uRequest.Send();
+        yield return uRequest.SendWebRequest(); 
         Action<DownloadHandler> handler = OnResponse;
         if (handler != null)
         {

@@ -59,8 +59,7 @@ namespace ChromeAppBuilder
 			string iconsFolder = Path.Combine (path, "Icons");
 			if (Directory.Exists (iconsFolder)) {
                 Dictionary<string, object> icons = new Dictionary<string, object>();
-                int[] iconSizes = new int[]{ 16, 48, 128 };
-				foreach (int size in iconSizes) {
+				foreach (int size in Icons.iconSizes) {
 					if (File.Exists (Path.Combine (iconsFolder, "icon" + size.ToString () + ".png"))) {
                         icons[size.ToString ()] = "Icons/icon" + size.ToString () + ".png";
 					}
