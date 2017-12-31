@@ -3,6 +3,8 @@
 
 ###### Since Google is killing chrome apps for Chrome on Windows, OS X and Linux, and now supporting Android on ChromeOS, I don't see the value in maintaining this repo.
 
+
+![Logo](https://raw.githubusercontent.com/iBicha/ChromeAppBuilder/master/Assets/ChromeAppBuilder/Editor/Resources/logo.png)
 # Chrome App Builder
 Chrome app builder is an editor extension and API for Unity3D to export games as google chrome apps. It is designed to look just like the build settings of other platforms.
 
