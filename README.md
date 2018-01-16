@@ -25,6 +25,18 @@ No, but it should be. I guess because of the nature of the constant change of th
 You need unity3d installed (~~5.3 and above recommended~~ you probably need the latest version, since Chrome app builder uses private unity apis that keep changing all the time, and we try to keep up and update it. so best way is to test.) with unity webgl module. And of course, you need google chrome on your computer.
 
 **Last commit worked with: Unity 2017.3.0f2**
+
+### API
+
+Calling Chrome API from Unity can be done from the following classes:
+- `Chrome.App.Browser` //To open a web page in a new tab [ref](https://developer.chrome.com/apps/browser)
+- `Chrome.App.Identity` //To get information about the currently connected user on Chrome [ref](https://developer.chrome.com/apps/identity)
+- `Chrome.App.Notification` //To display notifications [ref](https://developer.chrome.com/apps/notifications)
+- `Chrome.App.Power` //For power management [ref](https://developer.chrome.com/apps/power)
+- `Chrome.App.Window` //For window related operations (maximize, minimize, fullscreen, etc.) [ref](https://developer.chrome.com/apps/app_window)
+
+The `Chrome.Social` namespace can be used to use OAuth on various social media (Facebook, Linkedin, Instagram)
+
 ### Todos
 
  - Fix template manager so it works EXACTLY as the internal unity template manager
