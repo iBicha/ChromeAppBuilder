@@ -1,7 +1,7 @@
 ##### Disclaimer: Google is trying to get rid of Chrome apps on Windows, OS X and Linux in favor of webapps and Chrome extensions. The best use of this editor extension is for targeting ChromeOS which "*will remain supported and maintained for the foreseeable future.*"
 ###### read more about it here: https://blog.chromium.org/2016/08/from-chrome-apps-to-web.html
 
-###### Since Google is killing chrome apps for Chrome on Windows, OS X and Linux, and now supporting Android on ChromeOS, I don't see the value in maintaining this repo.
+###### Since Google is killing chrome apps for Chrome on Windows, OS X and Linux, and now supporting Android and Linux apps on ChromeOS, I don't see the value in maintaining this repo.
 
 
 ![Logo](https://raw.githubusercontent.com/iBicha/ChromeAppBuilder/master/Assets/ChromeAppBuilder/Editor/Resources/logo.png)
