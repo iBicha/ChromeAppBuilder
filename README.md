@@ -1,3 +1,4 @@
+##### :warning: Officially no longer supported. Use at your own risk.
 ##### Disclaimer: Google is trying to get rid of Chrome apps on Windows, OS X and Linux in favor of webapps and Chrome extensions. The best use of this editor extension is for targeting ChromeOS which "*will remain supported and maintained for the foreseeable future.*"
 ###### read more about it here: https://blog.chromium.org/2016/08/from-chrome-apps-to-web.html
 
